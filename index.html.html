@@ -1,0 +1,146 @@
+<html><head><base href="https://www.lasuperfierra.fm/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Super Fiera FM: La radio que te guía</title>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  header {
+    background-color: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+  .tagline {
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+  .headphones-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+  }
+  .player-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    max-width: 400px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  #audioPlayer {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  button {
+    background-color: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #333;
+  }
+  #volumeControl {
+    width: 150px;
+    margin: 0.5rem;
+  }
+  .volume-display {
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+  }
+  .now-playing {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>La Super Fiera FM</h1>
+    <p class="tagline">La radio que te guía</p>
+  </header>
+
+  <div class="headphones-container">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5,50 Q5,5 50,5 Q95,5 95,50" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+      <rect x="0" y="50" width="20" height="30" rx="5" fill="#1a1a1a"/>
+      <rect x="80" y="50" width="20" height="30" rx="5" fill="#1a1a1a"/>
+      <circle cx="10" cy="65" r="8" fill="#333"/>
+      <circle cx="90" cy="65" r="8" fill="#333"/>
+    </svg>
+  </div>
+
+  <div class="player-container">
+    <audio id="audioPlayer">
+      <source src="https://stream.zeno.fm/adh4iztoiydtv" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+    <div class="controls">
+      <button id="playPauseBtn">Play</button>
+      <input type="range" id="volumeControl" min="1" max="100" step="1" value="100">
+      <span class="volume-display">100</span>
+    </div>
+    <div class="now-playing">
+      Ahora reproduciendo: La Super Fiera FM
+    </div>
+  </div>
+
+  <script>
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const volumeControl = document.getElementById('volumeControl');
+    const volumeDisplay = document.querySelector('.volume-display');
+
+    playPauseBtn.addEventListener('click', () => {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseBtn.textContent = 'Pause';
+      } else {
+        audioPlayer.pause();
+        playPauseBtn.textContent = 'Play';
+      }
+    });
+
+    volumeControl.addEventListener('input', () => {
+      const volumeValue = volumeControl.value;
+      audioPlayer.volume = volumeValue / 100;
+      volumeDisplay.textContent = volumeValue;
+    });
+
+    audioPlayer.addEventListener('play', () => {
+      playPauseBtn.textContent = 'Pause';
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+      playPauseBtn.textContent = 'Play';
+    });
+
+    // Manejo de errores de carga de audio
+    audioPlayer.addEventListener('error', (e) => {
+      console.error('Error al cargar el audio:', e);
+      alert('Lo sentimos, hubo un problema al cargar el audio. Por favor, intenta de nuevo más tarde.');
+    });
+  </script>
+</body>
+</html>
